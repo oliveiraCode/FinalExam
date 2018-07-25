@@ -28,13 +28,13 @@ public class GameFragment extends Fragment implements View.OnLongClickListener {
     String value1="";
     String value2="";
     int id = 0;
+    Boolean newPlay = true;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View rootView = inflater.inflate(R.layout.fragment_game, container, false);
-
 
         buttonRoll(rootView);
         textViewDrag(rootView);
@@ -53,17 +53,18 @@ public class GameFragment extends Fragment implements View.OnLongClickListener {
             @Override
             public void onClick(View view) {
 
-                    int value1 = randomValues();
-                    int value2 = randomValues();
+                int value1 = randomValues();
+                int value2 = randomValues();
 
-                    while (value1 == value2){
-                        value1 = randomValues();
-                        value2 = randomValues();
-                    }
+                while (value1 == value2){
+                    value1 = randomValues();
+                    value2 = randomValues();
+                }
 
-                    result1.setText(String.valueOf(value1));
-                    result2.setText(String.valueOf(value2));
+                result1.setText(String.valueOf(value1));
+                result2.setText(String.valueOf(value2));
 
+                calculatePoints();
             }
         });
     }
@@ -85,6 +86,11 @@ public class GameFragment extends Fragment implements View.OnLongClickListener {
 
     @Override
     public boolean onLongClick(View view) {
+
+        if (newPlay){
+            restartGame();
+        }
+
         ClipData data = ClipData.newPlainText("","");
         view.startDrag(data, new View.DragShadowBuilder(view), null, 0);
 
@@ -110,6 +116,7 @@ public class GameFragment extends Fragment implements View.OnLongClickListener {
                 R.id.textView15,
                 R.id.textView16
         }) {
+
             rootView.findViewById(tvIds).setOnDragListener(new View.OnDragListener() {
                 @Override
                 public boolean onDrag(View view, DragEvent dragEvent) {
@@ -119,25 +126,15 @@ public class GameFragment extends Fragment implements View.OnLongClickListener {
 
                         TextView textView = getActivity().findViewById(tvIds);
 
-                        if (id == 0){
-                            id = view.getId();
-                            textView.setTextColor(Color.GREEN);
+                        textView.setTextColor(Color.GREEN);
+                        newPlay = false;
+
+
+                        if (value1 == ""){
                             value1 = textView.getText().toString();
-                            return false;
-                        }
-
-                        if (value1 != value2){
-                            textView.setTextColor(Color.GREEN);
+                        } else if (value2 == ""){
                             value2 = textView.getText().toString();
-                        } else {
-                            textView.setTextColor(Color.WHITE);
-                            return false;
                         }
-
-
-
-                        System.out.println("value1 "+value1);
-                        System.out.println("value2 "+value2);
 
                     }
 
@@ -149,9 +146,66 @@ public class GameFragment extends Fragment implements View.OnLongClickListener {
     }
 
 
+    private void calculatePoints(){
+
+        TextView result1 = getActivity().findViewById(R.id.result1);
+        TextView result2 = getActivity().findViewById(R.id.result2);
+        TextView score = getActivity().findViewById(R.id.score);
+
+        if (value1.equals(result1.getText().toString()) && value2.equals(result2.getText().toString())){
+            int result = Integer.valueOf(score.getText().toString())+100;
+            score.setText(String.valueOf(result));
+        } else
+
+        if (value1.equals(result1.getText().toString()) || value2.equals(result2.getText().toString())){
+            int result = Integer.valueOf(score.getText().toString())+25;
+            score.setText(String.valueOf(result));
+        } else {
+            int result = Integer.valueOf(score.getText().toString())-5;
+            score.setText(String.valueOf(result));
+        }
+
+        newPlay = true;
+
+    }
+
     private int randomValues(){
         Random random = new Random();
-        return (random.nextInt(8))+1;
+        return (random.nextInt(16))+1;
+    }
+
+    private void restartGame(){
+
+        value1 = "";
+        value2 = "";
+
+        TextView result1 = getActivity().findViewById(R.id.result1);
+        TextView result2 = getActivity().findViewById(R.id.result2);
+        result1.setText("00");
+        result2.setText("00");
+
+
+        for (final int tvIds : new int[]{
+                R.id.textView1,
+                R.id.textView2,
+                R.id.textView3,
+                R.id.textView4,
+                R.id.textView5,
+                R.id.textView6,
+                R.id.textView7,
+                R.id.textView8,
+                R.id.textView9,
+                R.id.textView10,
+                R.id.textView11,
+                R.id.textView12,
+                R.id.textView13,
+                R.id.textView14,
+                R.id.textView15,
+                R.id.textView16
+        }) {
+            TextView textView = getActivity().findViewById(tvIds);
+            textView.setTextColor(Color.WHITE);
+        }
     }
 
 }
