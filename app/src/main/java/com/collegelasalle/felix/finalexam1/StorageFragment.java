@@ -4,6 +4,9 @@ package com.collegelasalle.felix.finalexam1;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.support.animation.DynamicAnimation;
+import android.support.animation.SpringAnimation;
+import android.support.animation.SpringForce;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -24,6 +27,7 @@ public class StorageFragment extends Fragment {
     private final String requestFormat = "https://www.omdbapi.com/?apikey=%s&t=%s";
     private final String apiKey = "6a464315";
     private String request;
+    private boolean isBig = true;
 
     public StorageFragment() {
         // Required empty public constructor
@@ -49,17 +53,32 @@ public class StorageFragment extends Fragment {
                 TextView textViewSaved = getActivity().findViewById(R.id.textViewSaved);
 
 
+                SpringAnimation animX = new SpringAnimation(textViewSaved, DynamicAnimation.ROTATION,
+                        90);
+
+
+                SpringAnimation animY = new SpringAnimation(textViewSaved, DynamicAnimation.ROTATION,
+                        -90);
+
+
 
                 if (sharedPref.getString(editTextName.getText().toString(), "") != ""){
                     TextView storageResult = getActivity().findViewById(R.id.storageResult);
 
                     storageResult.setText(sharedPref.getString(editTextName.getText().toString(), ""));
                     textViewSaved.setText("YES");
-                } else {
-                textViewSaved.setText("NO");
-                    download();
 
-            }
+
+                    animX.start();
+
+
+                } else {
+                    textViewSaved.setText("NO");
+                    download();
+                    animY.start();
+
+                }
+                isBig = !isBig;
             }
         });
 

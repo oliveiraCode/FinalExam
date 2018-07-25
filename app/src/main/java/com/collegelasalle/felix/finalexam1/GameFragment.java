@@ -119,8 +119,6 @@ public class GameFragment extends Fragment implements View.OnLongClickListener {
 
                         TextView textView = getActivity().findViewById(tvIds);
 
-
-
                         if (id == 0){
                             id = view.getId();
                             textView.setTextColor(Color.GREEN);

@@ -101,7 +101,6 @@ public class SensorFragment extends Fragment implements SensorEventListener {
 
         sensorResult.setText(String.valueOf(sensorEvent.values[0]));
 
-
     }
 
 
