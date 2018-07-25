@@ -23,6 +23,7 @@ public class SensorFragment extends Fragment implements SensorEventListener {
 
     private SensorManager sensorManager;
     private Sensor sensor;
+    private boolean isVisible = false;
 
     public SensorFragment() {
         // Required empty public constructor
@@ -39,14 +40,11 @@ public class SensorFragment extends Fragment implements SensorEventListener {
 
         RadioGroup radioGroup = rootView.findViewById(R.id.radioGroup);
 
-        sensorManager = (SensorManager) getContext().getSystemService(Context.SENSOR_SERVICE);
-
-
-
-
         radioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(RadioGroup radioGroup, int RadioButtonSelected) {
+
+                sensorManager = (SensorManager) getContext().getSystemService(Context.SENSOR_SERVICE);
 
                 switch (RadioButtonSelected){
                     case R.id.radioButtonTemperature:
@@ -59,9 +57,11 @@ public class SensorFragment extends Fragment implements SensorEventListener {
                         getPressure();
                         break;
                 }
+
+
+
             }
         });
-
 
 
         return rootView;
@@ -69,38 +69,42 @@ public class SensorFragment extends Fragment implements SensorEventListener {
     }
 
     private void getLight(){
-
         sensor = sensorManager.getDefaultSensor(Sensor.TYPE_LIGHT);
 
-        sensorManager.registerListener(this,sensor,SensorManager.SENSOR_DELAY_NORMAL);
+        if (isVisible){
+            sensorManager.unregisterListener(this);
+        }
 
+        sensorManager.registerListener(this,sensor,SensorManager.SENSOR_DELAY_FASTEST);
     }
 
     private void getPressure(){
-
         sensor = sensorManager.getDefaultSensor(Sensor.TYPE_PRESSURE);
 
-        sensorManager.registerListener(this,sensor,SensorManager.SENSOR_DELAY_NORMAL);
+        if (isVisible){
+            sensorManager.unregisterListener(this);
+        }
 
+        sensorManager.registerListener(this,sensor,SensorManager.SENSOR_DELAY_FASTEST);
     }
 
     private void getTemperature(){
-
         sensor = sensorManager.getDefaultSensor(Sensor.TYPE_AMBIENT_TEMPERATURE);
 
-        sensorManager.registerListener(this,sensor,SensorManager.SENSOR_DELAY_NORMAL);
+        if (isVisible){
+            sensorManager.unregisterListener(this);
+        }
 
+        sensorManager.registerListener(this,sensor,SensorManager.SENSOR_DELAY_FASTEST);
     }
 
     @Override
     public void onSensorChanged(SensorEvent sensorEvent) {
 
         TextView sensorResult = getActivity().findViewById(R.id.sensorResult);
-
-        System.out.println(sensorEvent.values[0]);
-
         sensorResult.setText(String.valueOf(sensorEvent.values[0]));
 
+        isVisible = true;
     }
 
 
