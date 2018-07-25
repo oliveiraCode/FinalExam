@@ -15,6 +15,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.TextView;
 
 import com.google.android.gms.location.FusedLocationProviderClient;
@@ -73,8 +74,9 @@ public class LocationFragment extends Fragment {
 
                         Geocoder geocoder = new Geocoder(getContext(), Locale.getDefault());
 
-                        TextView tvLatitude = getActivity().findViewById(R.id.textView1);
-                        TextView tvLongitude = getActivity().findViewById(R.id.textView2);
+                        EditText tvLatitude = getActivity().findViewById(R.id.editText1);
+                        EditText tvLongitude = getActivity().findViewById(R.id.editText2);
+
 
                         TextView locationResult = getActivity().findViewById(R.id.locationResult);
 
