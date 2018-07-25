@@ -10,7 +10,7 @@
 
     <!-- TODO: Update blank fragment layout -->
     <TextView
-        android:id="@+id/result"
+        android:id="@+id/result2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="00"
@@ -245,7 +245,7 @@
     </TableLayout>
 
     <Button
-        android:id="@+id/button2"
+        android:id="@+id/btnRoll"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="32dp"
@@ -275,7 +275,7 @@
         android:layout_marginLeft="72dp"
         android:layout_marginStart="72dp"
         android:src="@mipmap/ic_launcher_round"
-        app:layout_constraintBottom_toTopOf="@+id/button2"
+        app:layout_constraintBottom_toTopOf="@+id/btnRoll"
         app:layout_constraintStart_toStartOf="parent" />
 
     <ImageView

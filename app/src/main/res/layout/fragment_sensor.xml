@@ -10,6 +10,7 @@
 
     <!-- TODO: Update blank fragment layout -->
     <RadioGroup
+        android:id="@+id/radioGroup"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="8dp"
@@ -23,25 +24,25 @@
         app:layout_constraintTop_toBottomOf="@+id/sensorResult">
 
         <RadioButton
-            android:id="@+id/radioButton1"
+            android:id="@+id/radioButtonTemperature"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="A" />
+            android:text="Temperature" />
 
         <RadioButton
-            android:id="@+id/radioButton2"
+            android:id="@+id/radioButtonLight"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="B" />
+            android:text="Light" />
 
         <RadioButton
-            android:id="@+id/radioButton3"
+            android:id="@+id/radioButtonPressure"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="C" />
+            android:text="Pressure" />
     </RadioGroup>
 
     <TextView
